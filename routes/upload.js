@@ -22,7 +22,7 @@ module.exports = function (app) {
         const body = req.body;
         var ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
         // console.log(body)
-        if (!body || !body.filename || !body.nonce || !body.data) {
+        if (!body || !body.filename || !body.nonce || !body.data || typeof body.settings != Object || !body.settings || !body.settings.longLink || !body.settings.deleteOnOpen || !body.settings.limitDownloads) {
             return res.status(406).json({success: false, message: "invalid fields"});
         };
 
@@ -33,7 +33,7 @@ module.exports = function (app) {
         const uuid = await generateUuid(process.env.UUID_LENGTH);
         const deletionUuid = await generateDeletionUuid();
 
-        await saveMetadata(filename, nonce, ip, uuid, deletionUuid);
+        await saveMetadata(filename, nonce, ip, uuid, deletionUuid, body.settings);
 
         if (saveFile(uuid, data)) {
             return res.json({success: true, message: "file saved", data: {

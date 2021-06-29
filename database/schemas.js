@@ -11,6 +11,7 @@ const metadataSchema = new mongoose.Schema({
     timestamp: Object,
     uuid: String,
     deletionUuid: String,
+    settings: Object
 }, {collection: 'metadata'});
 
 const metadataModel = new mongoose.model('FileMetadata', metadataSchema);
