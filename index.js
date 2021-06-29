@@ -7,8 +7,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const app = express();
-var cors = require('cors')
-app.use(cors())
+// var cors = require('cors')
+// app.use(cors())
 
 // const minify = require('express-minify');
 // app.use(minify());
