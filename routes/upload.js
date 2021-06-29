@@ -27,7 +27,7 @@ module.exports = function (app) {
         const nonce = body.nonce;
         const data = body.data;
 
-        const uuid = await generateUuid(20);
+        const uuid = await generateUuid(process.env.UUID_LENGTH);
 
         await saveMetadata(filename, nonce, ip, uuid);
 
