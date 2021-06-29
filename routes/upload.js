@@ -7,7 +7,7 @@ const express = require('express')
 const routers = require('./routers');
 const uploadRouter = routers.uploadRouter;
 const { saveMetadata } = require('../utils/saveMetadata');
-const {generateUuid} = require('../utils/generateUuid');
+const {generateUuid, generateDeletionUuid} = require('../utils/generateUuid');
 const {saveFile} = require('../utils/saveFile');
 
 // Code
@@ -28,12 +28,15 @@ module.exports = function (app) {
         const data = body.data;
 
         const uuid = await generateUuid(process.env.UUID_LENGTH);
-        const deletionUuid = generateDeletionUuid();
+        const deletionUuid = await generateDeletionUuid();
 
         await saveMetadata(filename, nonce, ip, uuid, deletionUuid);
 
         if (saveFile(uuid, data)) {
-            return res.json({success: true, message: "file saved", data: uuid});
+            return res.json({success: true, message: "file saved", data: {
+                fileUuid: uuid,
+                deletionUuid: deletionUuid
+            }});
         } else {
             return res.status(500).json({success: false, message: "internal error"});
         }

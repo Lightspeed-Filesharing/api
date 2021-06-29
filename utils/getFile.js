@@ -19,6 +19,18 @@ const getFile = async (uuid) => {
     }
 }
 
+const getFileDeletionUuid = async (uuid) => {
+    const metadataDoc = await metadataModel.findOne({uuid: uuid});
+
+    if (!metadataDoc) {
+        return false;
+    }
+
+    return metadataDoc.deletionUuid;
+
+}
+
 module.exports = {
-    getFile: getFile
+    getFile: getFile,
+    getFileDeletionUuid: getFileDeletionUuid,
 }
