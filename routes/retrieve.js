@@ -20,5 +20,5 @@ module.exports = function (app) {
         };
 
         res.json({success: true, message: "file retrieved", data: fileData})
-    })
+    });
 }

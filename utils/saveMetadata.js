@@ -1,13 +1,14 @@
-const { metadataModel } = require("../database/schemas")
-const { hashText } = require("./hashing")
+const {metadataModel} = require("../database/schemas");
+const {hashText} = require("./hashing");
 
-const saveMetadata = async (filename, nonce, ip, uuid) => {
+const saveMetadata = async (filename, nonce, ip, uuid, deletionUuid) => {
     const metadataDoc = new metadataModel({
         hashedIP: hashText(ip),
         name: filename,
         nonce: nonce,
         timestamp: new Date(),
-        uuid: uuid,
+        uuid: uuid, 
+        deletionUuid: deletionUuid
     });
 
     metadataDoc.save();

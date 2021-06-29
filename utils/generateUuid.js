@@ -1,3 +1,5 @@
+const {uuidv4} = require('uuid');
+
 const { metadataModel } = require("../database/schemas");
 
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv1234567890";
@@ -38,6 +40,29 @@ const isUnique = async (uuid) => {
     return true;
 }
 
+const isDeletionUnique = async (uuid) => {
+    const unique = await metadataModel.findOne({deletionUuid: uuid});
+
+    if (unique !== null) {
+        return false;
+    }
+
+    return true;
+}
+
+const generateDeletionUuid = async () => {
+    var unique;
+    var uuid;
+
+    while (unique !== true) {
+        uuid = uuidv4();
+        unique = await isDeletionUnique(uuid)
+    }
+
+    return uuid;
+}
+
 module.exports = {
-    generateUuid: generateUuid
+    generateUuid: generateUuid,
+    generateDeletionUuid: generateDeletionUuid
 }

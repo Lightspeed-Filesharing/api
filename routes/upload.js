@@ -28,8 +28,9 @@ module.exports = function (app) {
         const data = body.data;
 
         const uuid = await generateUuid(process.env.UUID_LENGTH);
+        const deletionUuid = generateDeletionUuid();
 
-        await saveMetadata(filename, nonce, ip, uuid);
+        await saveMetadata(filename, nonce, ip, uuid, deletionUuid);
 
         if (saveFile(uuid, data)) {
             return res.json({success: true, message: "file saved", data: uuid});

@@ -9,10 +9,11 @@ const metadataSchema = new mongoose.Schema({
     name: String,
     nonce: String,
     timestamp: Object,
-    uuid: String
-}, {collection: 'metadata'})
+    uuid: String,
+    deletionUuid: String,
+}, {collection: 'metadata'});
 
-const metadataModel = new mongoose.model('FileMetadata', metadataSchema)
+const metadataModel = new mongoose.model('FileMetadata', metadataSchema);
 
 // Module exports
 
