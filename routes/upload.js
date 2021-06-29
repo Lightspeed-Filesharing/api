@@ -1,7 +1,7 @@
 // Imports
 
 const express = require('express')
-const fileupload = require('express-fileupload');
+const formData = require("express-form-data");
 
 // Files
 
@@ -15,12 +15,13 @@ const {saveFile} = require('../utils/saveFile');
 module.exports = function (app) {
 
     uploadRouter.use(express.json())
-    uploadRouter.use(fileUpload());
+    uploadRouter.use(formData.parse());
       
     uploadRouter.post('/', async function (req, res) {
-        const body = req.files;
+        // console.log(req)
+        const body = req.body;
         var ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
-
+        // console.log(body)
         if (!body || !body.filename || !body.nonce || !body.data) {
             return res.status(406).json({success: false, message: "invalid fields"});
         };
@@ -34,7 +35,7 @@ module.exports = function (app) {
 
         await saveMetadata(filename, nonce, ip, uuid, deletionUuid);
 
-        if (saveFile(uuid, Buffer.from(data))) {
+        if (saveFile(uuid, data)) {
             return res.json({success: true, message: "file saved", data: {
                 fileUuid: uuid,
                 deletionUuid: deletionUuid
