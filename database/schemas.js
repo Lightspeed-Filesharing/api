@@ -9,6 +9,7 @@ const metadataSchema = new mongoose.Schema({
     name: String,
     nonce: String,
     timestamp: Object,
+    uuid: String
 }, {collection: 'metadata'})
 
 const metadataModel = new mongoose.model('FileMetadata', metadataSchema)
