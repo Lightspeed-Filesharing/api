@@ -32,6 +32,6 @@ module.exports = function (app) {
 
         await deleteFile(req.query.deletionUuid);
 
-        res.json({success: true, message: "file deleted"})
+        res.json({success: true, message: "file deleted"});
     });
 }

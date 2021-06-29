@@ -1,6 +1,7 @@
 // Imports
 
 const express = require('express')
+const fileupload = require('express-fileupload');
 
 // Files
 
@@ -14,9 +15,10 @@ const {saveFile} = require('../utils/saveFile');
 module.exports = function (app) {
 
     uploadRouter.use(express.json())
-
+    uploadRouter.use(fileUpload());
+      
     uploadRouter.post('/', async function (req, res) {
-        const body = req.body;
+        const body = req.files;
         var ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
 
         if (!body || !body.filename || !body.nonce || !body.data) {
@@ -32,7 +34,7 @@ module.exports = function (app) {
 
         await saveMetadata(filename, nonce, ip, uuid, deletionUuid);
 
-        if (saveFile(uuid, data)) {
+        if (saveFile(uuid, Buffer.from(data))) {
             return res.json({success: true, message: "file saved", data: {
                 fileUuid: uuid,
                 deletionUuid: deletionUuid
