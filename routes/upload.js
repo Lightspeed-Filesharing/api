@@ -1,8 +1,9 @@
 // Imports
 
 const express = require('express')
-const formData = require("express-form-data");
+// const formData = require("express-form-data");
 
+const formData = require("express-fileupload");
 // Files
 
 const routers = require('./routers');
@@ -15,7 +16,8 @@ const {saveFile} = require('../utils/saveFile');
 module.exports = function (app) {
 
     // uploadRouter.use(express.json())
-    uploadRouter.use(formData.parse());
+    // uploadRouter.use(formData.parse());
+    uploadRouter.use(formData())
       
     uploadRouter.post('/', async function (req, res) {
         // console.log(req)
