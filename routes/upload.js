@@ -32,9 +32,9 @@ module.exports = function (app) {
         await saveMetadata(filename, nonce, ip, uuid);
 
         if (saveFile(uuid, data)) {
-            return res.json({success: true, message: "file saved"})
+            return res.json({success: true, message: "file saved", data: uuid});
         } else {
-            return res.status(500).json({success: false, message: "internal error"})
+            return res.status(500).json({success: false, message: "internal error"});
         }
 
     })
