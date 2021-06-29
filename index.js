@@ -15,9 +15,10 @@ const app = express();
 
 const routers = require('./routes/routers');
 const upload = require('./routes/upload')(app);
+const retrieve = require('./routes/retrieve')(app);
 
 app.use('/upload', routers.uploadRouter);
-
+app.use('/files', routers.filesRouter);
 
 // Connect to database
 mongoose.connect(`mongodb://${

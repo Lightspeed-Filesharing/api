@@ -1,8 +1,9 @@
 const express = require('express');
-const app = express();
 
 const uploadRouter = express.Router();
+const filesRouter = express.Router();
 
 module.exports = {
-    uploadRouter: uploadRouter
+    uploadRouter: uploadRouter,
+    filesRouter: filesRouter
 }
