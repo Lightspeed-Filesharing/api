@@ -1,12 +1,7 @@
 // Imports
 
-const express = require('express')
-const formData = require("express-form-data");
-var bodyParser = require('body-parser');
-const formidable = require('express-formidable');
-
-var multer = require('multer');
-var upload = multer({limits: { fieldSize: 50 * 1024 * 1024 }})
+const multer = require('multer');
+const upload = multer({limits: { fieldSize: 50 * 1024 * 1024 }})
 
 // const formData = require("express-fileupload");
 // Files
@@ -20,25 +15,12 @@ const {saveFile} = require('../utils/saveFile');
 // Code
 module.exports = function (app) {
     
-    // uploadRouter.use(express.json())
-    // uploadRouter.use(formData.parse());
-    // uploadRouter.use(formData())
-    // uploadRouter.use(bodyParser.urlencoded({   extended: true,
-    //     limit: '50mb',
-    //     parameterLimit: 100000
-    //    }));
-    // uploadRouter.use(formidable())
     uploadRouter.use(upload.array());
 
     uploadRouter.post('/', async function (req, res) {
-        // console.log(req)
-        // console.log("Received request")
-        // console.log(req.fields)
-        // console.log(req.body)
-        // console.log(req.files)
         const body = req.body;
         var ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
-        // console.log(body)
+
         if (!body || !body.filename || !body.nonce || !body.data || !body.longLink || !body.deleteOnOpen || !body.limitDownloads || !body.message) {
             return res.status(406).json({success: false, message: "invalid fields"});
         };
