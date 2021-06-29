@@ -14,7 +14,7 @@ const {saveFile} = require('../utils/saveFile');
 // Code
 module.exports = function (app) {
 
-    uploadRouter.use(express.json())
+    // uploadRouter.use(express.json())
     uploadRouter.use(formData.parse());
       
     uploadRouter.post('/', async function (req, res) {
