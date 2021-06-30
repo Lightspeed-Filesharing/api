@@ -8,10 +8,11 @@ const metadataSchema = new mongoose.Schema({
     hashedIP: String,
     name: String,
     nonce: String,
+    type: String,
     timestamp: Object,
     uuid: String,
     deletionUuid: String,
-    settings: Object
+    settings: Object,
 }, {collection: 'metadata'});
 
 const metadataModel = new mongoose.model('FileMetadata', metadataSchema);

@@ -23,17 +23,15 @@ module.exports = function (app) {
         const body = req.body;
         var ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
 
-        if (!body || !body.filename || !body.nonce || !files || !body.longLink || !body.deleteOnOpen || !body.limitDownloads || !body.message) {
+        if (!body || !body.filename || !body.nonce || !body.type || !files || !body.longLink || !body.deleteOnOpen || !body.limitDownloads || !body.message) {
             return res.status(406).json({success: false, message: "invalid fields"});
         };
 
         const filename = body.filename;
         const nonce = body.nonce;
+        const type = body.type;
         const data = Buffer.from(files[0].buffer);
-        console.log(data)
-        // console.log(typeof data)
-        // console.log(data.length)
-        // var blob = new Blob([encryp], {type: "text/plain;charset=utf-8"});
+
         const settings = {
             longLink: body.longLink,
             deleteOnOpen: body.deleteOnOpen,
@@ -43,7 +41,7 @@ module.exports = function (app) {
         const uuid = await generateUuid(process.env.UUID_LENGTH);
         const deletionUuid = await generateDeletionUuid();
 
-        await saveMetadata(filename, nonce, ip, uuid, deletionUuid, settings);
+        await saveMetadata(filename, nonce, type, ip, uuid, deletionUuid, settings);
 
         if (saveFile(uuid, data)) {
             return res.json({success: true, message: "file saved", data: {
