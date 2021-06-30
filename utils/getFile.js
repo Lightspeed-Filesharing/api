@@ -15,7 +15,9 @@ const getFile = async (uuid) => {
         nonce: metadataDoc.nonce,
         timestamp: metadataDoc.timestamp,
         type: metadataDoc.type,
-        message: metadataDoc.settings.message
+        message: metadataDoc.settings.message,
+        settings: metadataDoc.settings,
+        deletionUuid: metadataDoc.deletionUuid,
     }
 }
 
