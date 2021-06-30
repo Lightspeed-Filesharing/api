@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 
 const app = express();
 
-if (process.env.INTERNAL_CORS == true) {
+if (process.env.INTERNAL_CORS == "true") {
     var cors = require('cors')
     app.use(cors())
 }
