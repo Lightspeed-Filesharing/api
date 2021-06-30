@@ -19,7 +19,7 @@ module.exports = function (app) {
 
     uploadRouter.post('/', async function (req, res) {
         const files = req.files;
-        console.log(files)
+        // console.log(files)
         const body = req.body;
         var ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
 

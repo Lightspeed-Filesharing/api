@@ -41,8 +41,15 @@ const getFileDeletionUuid = async (uuid) => {
 
 }
 
+const updateDownloadCount = async (uuid) => {
+    const metadataDoc = await metadataModel.findOne({uuid: uuid});
+
+    await metadataModel.updateOne({uuid: uuid}, {$set: {downloads: metadataDoc.downloads + 1}});
+}
+
 module.exports = {
     getFile: getFile,
     getFileDeletionUuid: getFileDeletionUuid,
-    getFileData: getFileData
+    getFileData: getFileData,
+    updateDownloadCount: updateDownloadCount,
 }

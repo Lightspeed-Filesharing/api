@@ -13,6 +13,7 @@ const metadataSchema = new mongoose.Schema({
     uuid: String,
     deletionUuid: String,
     settings: Object,
+    downloads: Number,
 }, {collection: 'metadata'});
 
 const metadataModel = new mongoose.model('FileMetadata', metadataSchema);
