@@ -15,23 +15,30 @@ const {saveFile} = require('../utils/saveFile');
 // Code
 module.exports = function (app) {
     
-    uploadRouter.use(upload.array());
+    uploadRouter.use(upload.array('data'));
 
     uploadRouter.post('/', async function (req, res) {
+        const files = req.files;
+        console.log(files)
         const body = req.body;
         var ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
 
-        if (!body || !body.filename || !body.nonce || !body.data || !body.longLink || !body.deleteOnOpen || !body.limitDownloads || !body.message) {
+        if (!body || !body.filename || !body.nonce || !files || !body.longLink || !body.deleteOnOpen || !body.limitDownloads || !body.message) {
             return res.status(406).json({success: false, message: "invalid fields"});
         };
 
         const filename = body.filename;
         const nonce = body.nonce;
-        const data = body.data;
+        const data = Buffer.from(files[0].buffer);
+        console.log(data)
+        // console.log(typeof data)
+        // console.log(data.length)
+        // var blob = new Blob([encryp], {type: "text/plain;charset=utf-8"});
         const settings = {
             longLink: body.longLink,
             deleteOnOpen: body.deleteOnOpen,
-            limitDownloads: body.limitDownloads
+            limitDownloads: body.limitDownloads,
+            message: body.message
         }
         const uuid = await generateUuid(process.env.UUID_LENGTH);
         const deletionUuid = await generateDeletionUuid();

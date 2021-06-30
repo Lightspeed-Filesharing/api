@@ -10,13 +10,22 @@ const getFile = async (uuid) => {
         return false;
     }
 
-    const data = fs.readFileSync(path.resolve(`data/${metadataDoc.uuid}`), 'utf8');
     return {
         filename: metadataDoc.name,
         nonce: metadataDoc.nonce,
         timestamp: metadataDoc.timestamp,
-        data: data
     }
+}
+
+const getFileData = async (uuid) => {
+    const metadataDoc = await metadataModel.findOne({uuid: uuid});
+
+    if (!metadataDoc) {
+        return false;
+    }
+
+    const data = fs.readFileSync(path.resolve(`data/${metadataDoc.uuid}`), 'binary');
+    return data;
 }
 
 const getFileDeletionUuid = async (uuid) => {
@@ -33,4 +42,5 @@ const getFileDeletionUuid = async (uuid) => {
 module.exports = {
     getFile: getFile,
     getFileDeletionUuid: getFileDeletionUuid,
+    getFileData: getFileData
 }
