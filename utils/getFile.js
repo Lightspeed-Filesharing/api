@@ -14,6 +14,7 @@ const getFile = async (uuid) => {
         filename: metadataDoc.name,
         nonce: metadataDoc.nonce,
         timestamp: metadataDoc.timestamp,
+        type: metadataDoc.type,
     }
 }
 
