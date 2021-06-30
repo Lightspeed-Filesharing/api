@@ -10,7 +10,8 @@ const saveMetadata = async (filename, nonce, type, ip, uuid, deletionUuid, setti
         timestamp: new Date(),
         uuid: uuid, 
         deletionUuid: deletionUuid,
-        settings: settings
+        settings: settings,
+        downloads: 0,
     });
 
     metadataDoc.save();
