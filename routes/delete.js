@@ -13,22 +13,17 @@ const {deleteFile} = require('../utils/deleteFile');
 module.exports = function (app) {
 
     deleteRouter.get('/:uuid', async function (req, res) {
-        if (!req.params.uuid || !req.query.deletionUuid) {
+        if (!req.params.uuid) {
             return res.status(404).json({success: false, message: "file not found"});
         }
 
         const fileData = await getFileDeletionUuid(req.params.uuid);
-        console.log(fileData)
 
         if (!fileData) {
             return res.status(404).json({success: false, message: "file not found"});
         };
 
-        if (fileData !== req.query.deletionUuid) {
-            return res.status(404).json({success: false, message: "file not found"});
-        }
-
-        await deleteFile(req.query.deletionUuid);
+        await deleteFile(req.params.uuid);
 
         res.json({success: true, message: "file deleted"});
     });
