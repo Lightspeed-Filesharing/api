@@ -12,9 +12,7 @@ const {deleteFile} = require('../utils/deleteFile');
 // Code
 module.exports = function (app) {
 
-    deleteRouter.delete('/:uuid', async function (req, res) {
-        // console.log(req.params.uuid)
-
+    deleteRouter.get('/:uuid', async function (req, res) {
         if (!req.params.uuid || !req.query.deletionUuid) {
             return res.status(404).json({success: false, message: "file not found"});
         }
