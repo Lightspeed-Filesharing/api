@@ -13,9 +13,6 @@ if (process.env.INTERNAL_CORS == "true") {
     app.use(cors())
 }
 
-// const minify = require('express-minify');
-// app.use(minify());
-
 // Files
 
 const routers = require('./routes/routers');
@@ -23,11 +20,14 @@ const upload = require('./routes/upload')(app);
 const retrieve = require('./routes/retrieve')(app);
 const deletion = require('./routes/delete')(app);
 
+// Routers
+
 app.use('/upload', routers.uploadRouter);
 app.use('/files', routers.filesRouter);
 app.use('/delete', routers.deleteRouter)
 
 // Connect to database
+
 mongoose.connect(`mongodb://${
     process.env.DB_HOST
 }:${
@@ -45,8 +45,10 @@ db.once('open', function () {
     console.log("Connected to MongoDB.");
 });
 
+// Redirect to home
+
 app.get('/', async function (req, res) {
-    res.redirect('https://horizon.pics');
+    res.redirect('https://lightspeed.blue');
 });
 
 // Listen on port
