@@ -33,7 +33,7 @@ const getFileData = async (uuid) => {
 }
 
 const getFileDeletionUuid = async (uuid) => {
-    const metadataDoc = await metadataModel.findOne({uuid: uuid});
+    const metadataDoc = await metadataModel.findOne({deletionUuid: uuid});
 
     if (!metadataDoc) {
         return false;
