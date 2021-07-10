@@ -41,7 +41,7 @@ module.exports = function (app) {
 
         var uuid;
 
-        if (body.longLink === true) {
+        if (body.longLink === "true") {
             uuid = await generateUuid(process.env.LONG_UUID_LENGTH);
         } else {
             uuid = await generateUuid(process.env.UUID_LENGTH);
