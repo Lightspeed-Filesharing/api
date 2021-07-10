@@ -41,12 +41,12 @@ module.exports = function (app) {
 
         var uuid;
 
-        if (longLink === true) {
+        if (body.longLink === true) {
             uuid = await generateUuid(process.env.LONG_UUID_LENGTH);
         } else {
             uuid = await generateUuid(process.env.UUID_LENGTH);
         }
-        
+
         const deletionUuid = await generateDeletionUuid();
 
         await saveMetadata(filename, nonce, type, ip, uuid, deletionUuid, settings);
