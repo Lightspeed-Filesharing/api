@@ -38,7 +38,15 @@ module.exports = function (app) {
             limitDownloads: body.limitDownloads,
             message: body.message
         }
-        const uuid = await generateUuid(process.env.UUID_LENGTH);
+
+        var uuid;
+
+        if (longLink === true) {
+            uuid = await generateUuid(process.env.LONG_UUID_LENGTH);
+        } else {
+            uuid = await generateUuid(process.env.UUID_LENGTH);
+        }
+        
         const deletionUuid = await generateDeletionUuid();
 
         await saveMetadata(filename, nonce, type, ip, uuid, deletionUuid, settings);
